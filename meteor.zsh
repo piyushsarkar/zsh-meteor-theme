@@ -12,6 +12,13 @@ METEOR_PROMPT_PREFIX_COLOR="015"
 METEOR_GIT_BRANCH_PREFIX="⇢ "
 METEOR_GIT_COLOR="008"
 
+METEOR_SHOW_PACKAGE_MANAGER=false
+METEOR_PACKAGE_MANAGER_COLOR="246"
+declare -A METEOR_MAP_PACKAGE_MANAGER_NAMES
+METEOR_MAP_PACKAGE_MANAGER_NAMES=(
+  ["package"]="npm"
+)
+
 # Load version control information
 autoload -Uz vcs_info
 precmd() {
@@ -36,6 +43,21 @@ function prompt:directory() {
   echo "${METEOR_CURRENT_PATH}"
 }
 
+function prompt:package_manager() {
+  if [[ $METEOR_SHOW_PACKAGE_MANAGER == true ]]; then
+    local file=$(find . -maxdepth 1 -type f -iname "*.lock" -execdir basename {} .lock ';' | head -1)
+    if [[ -n $file ]]; then;
+    local filename
+      if [[ -n  $METEOR_MAP_PACKAGE_MANAGER_NAMES[$file] ]]; then
+        filename=$METEOR_MAP_PACKAGE_MANAGER_NAMES[$file]
+      else
+        filename=$file
+      fi
+      echo "%F{$METEOR_PACKAGE_MANAGER_COLOR} [$filename]%f"
+    fi
+  fi
+}
+
 PROMPT='${METEOR_PROMPT_PREFIX_SYMBOL}%B%F{$METEOR_DIRECTORY_COLOR}$(prompt:directory)%f%b'
 
 
@@ -45,4 +67,4 @@ else
   RPROMPT='%B%F{$METEOR_GIT_COLOR}${vcs_info_msg_0_}%f%b'
 fi
 
-PROMPT+='%F{$METEOR_PROMPT_SUFFIX_COLOR}%b${METEOR_PROMPT_SUFFIX_SYMBOL}%f'
+PROMPT+='$(prompt:package_manager)%F{$METEOR_PROMPT_SUFFIX_COLOR}%b${METEOR_PROMPT_SUFFIX_SYMBOL}%f'
