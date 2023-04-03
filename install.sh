@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-ZSH_SCRIPT_URL=https://raw.githubusercontent.com/piyushsarkar/zsh-meteor-theme/main/install.sh
+ZSH_SCRIPT_URL=https://raw.githubusercontent.com/piyushsarkar/zsh-meteor-theme/main/meteor.zsh
 SCRIPT_DIRECTORY=.zsh/zsh-meteor-theme
 FILE_NAME=meteor.zsh
 SCRIPT_NAME="Meteor theme"
