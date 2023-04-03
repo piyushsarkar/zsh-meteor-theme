@@ -5,7 +5,7 @@
   <p align="center">Elevate your terminal experience with sleek and minimal meteor theme.</p>
 </p>
 
-![Terminal](https://user-images.githubusercontent.com/50408944/229355238-ba9a81d4-94f2-401f-a180-2022ac0e326f.png)
+![Terminal](https://user-images.githubusercontent.com/50408944/229465242-58161b45-b98c-4ec5-a21a-fce5ba145ea5.png)
 
 ## Installation
 
