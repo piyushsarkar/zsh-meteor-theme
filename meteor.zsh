@@ -17,7 +17,7 @@ autoload -Uz vcs_info
 precmd() {
   vcs_info
 }
-zstyle ':vcs_info:git:*' formats "%b" # Format the vcs_info_msg_0_ variable
+zstyle ':vcs_info:git:*' formats "${METEOR_GIT_BRANCH_PREFIX}%b" # Format the vcs_info_msg_0_ variable
 setopt PROMPT_SUBST # To make prompt string with single quotes work properly.
 
 # Addditional Functionalities
@@ -40,9 +40,9 @@ PROMPT='${METEOR_PROMPT_PREFIX_SYMBOL}%B%F{$METEOR_DIRECTORY_COLOR}$(prompt:dire
 
 
 if [[ $METEOR_GIT_IN_MAIN_PROMPT == true ]] then;
-  PROMPT+=' %B%F{$METEOR_GIT_COLOR}${METEOR_GIT_BRANCH_PREFIX}${vcs_info_msg_0_}%f%b'
+  PROMPT+=' %B%F{$METEOR_GIT_COLOR}${vcs_info_msg_0_}%f%b'
 else
-  RPROMPT='%B%F{$METEOR_GIT_COLOR}${METEOR_GIT_BRANCH_PREFIX}${vcs_info_msg_0_}%f%b'
+  RPROMPT='%B%F{$METEOR_GIT_COLOR}${vcs_info_msg_0_}%f%b'
 fi
 
 PROMPT+='%F{$METEOR_PROMPT_SUFFIX_COLOR}%b${METEOR_PROMPT_SUFFIX_SYMBOL}%f'
