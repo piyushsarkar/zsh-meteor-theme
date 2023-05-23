@@ -26,7 +26,7 @@ METEOR_SHOW_PACKAGE_MANAGER=false
 METEOR_PACKAGE_MANAGER_COLOR="246"
 declare -A METEOR_MAP_PACKAGE_MANAGER_NAMES
 METEOR_MAP_PACKAGE_MANAGER_NAMES=(
-  ["package"]="npm"
+  ["package-lock.json"]="npm"
 )
 
 METEOR_IMMEDIATE_UNSET_ASYNC=false
@@ -60,7 +60,7 @@ function get:git() {
 
 function get:package_manager() {
   if [[ $METEOR_SHOW_PACKAGE_MANAGER == true ]]; then
-    local file=$(find . -maxdepth 1 -type f -iname "*.lock" -execdir basename {} .lock ';' | head -1)
+    local file=$(find . -maxdepth 1 -type f -iname "*.lock" -o -iname "*-lock.json" -execdir basename {} .lock ';' | head -1)
     if [[ -n $file ]]; then;
     local filename=$file
       if [[ -n $METEOR_MAP_PACKAGE_MANAGER_NAMES[$file] ]]; then
