@@ -60,9 +60,9 @@ function get:git() {
 
 function get:package_manager() {
   if [[ $METEOR_SHOW_PACKAGE_MANAGER == true ]]; then
-    local file=$(find . -maxdepth 1 -type f -iname "*.lock" -o -iname "*-lock.json" -execdir basename {} .lock ';' | head -1)
-    if [[ -n $file ]]; then;
-    local filename=$file
+    local file=$(find . -maxdepth 1 -type f \( -iname "*.lock" -o -iname "*-lock.json" \) -execdir basename {} .lock ';' | head -1)
+    if [[ -n $file ]]; then
+      local filename=$file
       if [[ -n $METEOR_MAP_PACKAGE_MANAGER_NAMES[$file] ]]; then
         filename=$METEOR_MAP_PACKAGE_MANAGER_NAMES[$file]
       fi
