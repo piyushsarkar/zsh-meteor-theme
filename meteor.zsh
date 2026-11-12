@@ -27,6 +27,10 @@ METEOR_PACKAGE_MANAGER_COLOR="246"
 declare -A METEOR_MAP_PACKAGE_MANAGER_NAMES
 METEOR_MAP_PACKAGE_MANAGER_NAMES=(
   ["package-lock.json"]="npm"
+  ["yarn.lock"]="yarn"
+  ["pnpm-lock.yaml"]="pnpm"
+  ["bun.lockb"]="bun"
+  ["bun.lock"]="bun"
 )
 
 METEOR_IMMEDIATE_UNSET_ASYNC=false
@@ -50,7 +54,7 @@ function get:git() {
         gitstatuscolor=$METEOR_GIT_COLOR_CLEAN
       fi
     fi
-    if [ -z $METEOR_GIT_PREFIX_COLOR]; then; METEOR_GIT_PREFIX_COLOR=$gitstatuscolor; fi
+    if [ -z $METEOR_GIT_PREFIX_COLOR ]; then; METEOR_GIT_PREFIX_COLOR=$gitstatuscolor; fi
     local prefix="%F{$METEOR_GIT_PREFIX_COLOR}$METEOR_GIT_PREFIX%f"
     print "%B${prefix}%F{$gitstatuscolor}${ref}%b%f"
   else
@@ -60,14 +64,13 @@ function get:git() {
 
 function get:package_manager() {
   if [[ $METEOR_SHOW_PACKAGE_MANAGER == true ]]; then
-    local file=$(find . -maxdepth 1 -type f \( -iname "*.lock" -o -iname "*-lock.json" \) -execdir basename {} .lock ';' | head -1)
-    if [[ -n $file ]]; then
-      local filename=$file
-      if [[ -n $METEOR_MAP_PACKAGE_MANAGER_NAMES[$file] ]]; then
-        filename=$METEOR_MAP_PACKAGE_MANAGER_NAMES[$file]
+    local lockfile
+    for lockfile in ${(ok)METEOR_MAP_PACKAGE_MANAGER_NAMES}; do
+      if [[ -f $lockfile ]]; then
+        echo "%F{$METEOR_PACKAGE_MANAGER_COLOR} [${METEOR_MAP_PACKAGE_MANAGER_NAMES[$lockfile]}]%f"
+        return
       fi
-      echo "%F{$METEOR_PACKAGE_MANAGER_COLOR} [$filename]%f"
-    fi
+    done
   fi
 }
 
